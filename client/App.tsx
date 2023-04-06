@@ -9,9 +9,12 @@
  */
 
 import React from 'react';
-import {Entry} from './components/Entry';
+import { Entry } from './components/Entry';
 
 const App = () => {
+  if (__DEV__) {
+    import('./config/ReactotronConfig').then(() => console.log('Reactotron Configured'));
+  }
   return <Entry />;
 };
 
