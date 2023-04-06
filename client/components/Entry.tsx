@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { FormInput } from './common/form/FormInput';
 import { Button } from './common/buttons/Button';
+import { RequestMethod } from '@nestjs/common';
 
 export interface EmailSignInObj {
   email: string;
@@ -13,12 +14,8 @@ export const Entry = () => {
 
   const onHandleSubmit = () => {
     console.log('onSubmit press');
-    const url = 'http://localhost:3000/auth/login';
+    const url = 'http://192.168.61.249:3000/auth/login';
     const networkOptions = {
-      // method: RequestMethod.GET,
-      credentials: 'omit' as RequestCredentials_,
-    };
-    const httpRequest = fetch('http://192.168.61.249:3000/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,17 +24,10 @@ export const Entry = () => {
         username: 'john',
         password: 'changeme',
       }),
-    });
+    };
+    const httpRequest = fetch(url, networkOptions);
     console.log('onSubmit httpRequest', httpRequest);
   };
-
-  // const networkOptions = {
-  //   method: httpOptions?.requestMethod ?? RequestMethod.GET,
-  //   credentials: 'omit' as RequestCredentials_,
-  //   headers,
-  //   ...(httpOptions?.bodyParams && { body: JSON.stringify(httpOptions?.bodyParams) }),
-  //   signal,
-  // };
 
   return (
     <View
