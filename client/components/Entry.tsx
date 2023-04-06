@@ -13,10 +13,32 @@ export const Entry = () => {
 
   const onHandleSubmit = () => {
     console.log('onSubmit press');
-    const url = 'http://nestjs.com';
-    const httpRequest = fetch(url);
+    const url = 'http://localhost:3000/auth/login';
+    const networkOptions = {
+      // method: RequestMethod.GET,
+      credentials: 'omit' as RequestCredentials_,
+    };
+    const httpRequest = fetch('http://localhost:3000/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: 'john',
+        password: 'changeme',
+      }),
+    });
     console.log('onSubmit httpRequest', httpRequest);
   };
+
+  // const networkOptions = {
+  //   method: httpOptions?.requestMethod ?? RequestMethod.GET,
+  //   credentials: 'omit' as RequestCredentials_,
+  //   headers,
+  //   ...(httpOptions?.bodyParams && { body: JSON.stringify(httpOptions?.bodyParams) }),
+  //   signal,
+  // };
+
   return (
     <View
       style={{

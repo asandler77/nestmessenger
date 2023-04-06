@@ -1,4 +1,14 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Request,
+  UseGuards,
+} from "@nestjs/common";
+import { AuthGuard } from "./auth.guard";
 import { AuthService } from "./auth.service";
 
 @Controller("auth")
@@ -8,7 +18,15 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post("login")
   signIn(@Body() signInDto: Record<string, any>) {
-    //we should use a DTO class to define the shape of the request body. See the validation chapter for more information.
+    console.log('signIn')
     return this.authService.signIn(signInDto.username, signInDto.password);
+  }
+
+
+
+  @UseGuards(AuthGuard)
+  @Get("profile")
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
