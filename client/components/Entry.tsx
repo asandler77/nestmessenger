@@ -18,7 +18,7 @@ export const Entry = () => {
       // method: RequestMethod.GET,
       credentials: 'omit' as RequestCredentials_,
     };
-    const httpRequest = fetch('http://localhost:3000/auth/login', {
+    const httpRequest = fetch('http://192.168.61.249:3000/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
