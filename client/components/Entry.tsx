@@ -1,9 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { FormInput } from './common/form/FormInput';
 import { Button } from './common/buttons/Button';
-import { RequestMethod } from '@nestjs/common';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import UUID from 'pure-uuid';
+import { async } from 'rxjs';
 
 export interface EmailSignInObj {
   email: string;
@@ -12,8 +14,31 @@ export interface EmailSignInObj {
 export const Entry = () => {
   const { control, handleSubmit } = useForm<EmailSignInObj>();
 
+  const getTokenId = (): Promise<string> =>
+    AsyncStorage.getItem('authToken').then(token => {
+      if (token) {
+        return token;
+      } else {
+        const newToken = new UUID(4).toString();
+        return AsyncStorage.setItem('authToken', newToken).then(() => newToken);
+      }
+    });
+
+  const getProfile = async () => {
+    const url = 'http://192.168.61.249:3000/auth/profile';
+    const token = await getTokenId();
+    console.log('real token', token);
+
+    const httpRequest = fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log('httpRequest===', httpRequest, token);
+  };
+
   const onHandleSubmit = () => {
-    console.log('onSubmit press');
     const url = 'http://192.168.61.249:3000/auth/login';
     const networkOptions = {
       method: 'POST',
@@ -25,8 +50,12 @@ export const Entry = () => {
         password: 'changeme',
       }),
     };
-    const httpRequest = fetch(url, networkOptions);
-    console.log('onSubmit httpRequest', httpRequest);
+    fetch(url, networkOptions)
+      .then(res => res.json())
+      .then(data => {
+        console.log('data.token', data.access_token)
+        AsyncStorage.setItem('authToken', data.access_token);
+      });
   };
 
   return (
@@ -38,7 +67,10 @@ export const Entry = () => {
         flexDirection: 'row',
       }}>
       <FormInput name="email" control={control} title={'email'} placeholder={'enter email'} />
-      <Button btnLabel={'Submit'} onPress={handleSubmit(onHandleSubmit)} />
+      <Button btnLabel={'Authenticate'} onPress={handleSubmit(onHandleSubmit)} />
+      <TouchableOpacity onPress={getProfile}>
+        <Text>Get Profile</Text>
+      </TouchableOpacity>
     </View>
   );
 };

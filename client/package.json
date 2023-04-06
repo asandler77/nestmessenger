@@ -7,10 +7,13 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "start:reset": "npm run start -- --reset-cache"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.18.1",
     "@react-navigation/native": "^6.1.6",
+    "pure-uuid": "^1.6.3",
     "react": "18.1.0",
     "react-hook-form": "^7.43.9",
     "react-native": "0.70.6"
