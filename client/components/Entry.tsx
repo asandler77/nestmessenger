@@ -19,7 +19,7 @@ export const Entry = () => {
       if (token) {
         return token;
       } else {
-        const newToken = new UUID(4).toString();
+        const newToken = 'qwertyuiolkjhgfdsdfghjk';
         return AsyncStorage.setItem('authToken', newToken).then(() => newToken);
       }
     });
@@ -54,7 +54,6 @@ export const Entry = () => {
     fetch(url, networkOptions)
       .then(res => res.json())
       .then(data => {
-        console.log('data.token', data.access_token);
         AsyncStorage.setItem('authToken', data.access_token);
       });
   };
