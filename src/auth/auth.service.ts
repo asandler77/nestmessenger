@@ -16,10 +16,10 @@ export class AuthService {
   }
 
   async signIn(username: string, pass: string): Promise<any> {
-    console.log("login");
+    console.log("login and username===", username);
     const user = await this.usersService.findOne(username);
     if (user?.password !== pass) {
-      console.log("sign in error========");
+      console.log("sign in error========", user);
       throw new UnauthorizedException();
     }
 

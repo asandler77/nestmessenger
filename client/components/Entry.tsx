@@ -36,12 +36,7 @@ export const Entry = () => {
         password: 'lada',
       }),
     };
-    fetch(url, networkOptions)
-      .then(res => res.json())
-      .then(data => {
-        console.log('data in fetch======', data._id);
-        AsyncStorage.setItem('authToken', data.access_token);
-      });
+    fetch(url, networkOptions).then(res => res.json());
   };
 
   const onHandleSubmit = () => {
@@ -52,14 +47,14 @@ export const Entry = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: 'john',
-        password: 'changeme',
+        userName: 'Anna91',
+        password: 'lada',
       }),
     };
     fetch(url, networkOptions)
       .then(res => res.json())
       .then(data => {
-        console.log('data.token', data.access_token)
+        console.log('data.token', data.access_token);
         AsyncStorage.setItem('authToken', data.access_token);
       });
   };

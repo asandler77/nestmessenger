@@ -9,8 +9,8 @@ import { Model } from "mongoose";
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  async findOne(username: string) {
-    return this.userModel.findById(username);
+  async findOne(userName: string) {
+    return this.userModel.findOne({ userName }).exec()
   }
 
   async create(createUserDto: User): Promise<User> {
