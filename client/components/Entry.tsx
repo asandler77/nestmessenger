@@ -25,17 +25,23 @@ export const Entry = () => {
     });
 
   const getProfile = async () => {
-    const url = 'http://192.168.61.249:3000/auth/profile';
-    const token = await getTokenId();
-    console.log('real token', token);
-
-    const httpRequest = fetch(url, {
+    const url = 'http://192.168.61.249:3000/auth/create';
+    const networkOptions = {
+      method: 'POST',
       headers: {
-        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
-    });
-
-    console.log('httpRequest===', httpRequest, token);
+      body: JSON.stringify({
+        userName: 'Anna91',
+        password: 'lada',
+      }),
+    };
+    fetch(url, networkOptions)
+      .then(res => res.json())
+      .then(data => {
+        console.log('data in fetch======', data._id);
+        AsyncStorage.setItem('authToken', data.access_token);
+      });
   };
 
   const onHandleSubmit = () => {
