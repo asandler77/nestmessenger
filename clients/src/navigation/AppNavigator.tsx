@@ -12,7 +12,7 @@ export const AppNavigator = () => {
       {isSignedIn ? (
         <RootStack.Screen name="Messenger" component={Messenger} />
       ) : (
-        <RootStack.Screen name="SignIn" component={AuthNavigator} />
+        <RootStack.Screen name="AuthNavigator" component={AuthNavigator} />
       )}
     </RootStack.Navigator>
   );

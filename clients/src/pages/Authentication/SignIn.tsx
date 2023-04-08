@@ -21,7 +21,7 @@ export const SignIn = ({navigation}) => {
   };
 
   const onHandleSubmit = () => {
-    const url = 'http://192.168.61.249:3000/auth/login';
+    const url = 'http://192.168.214.249:3000/auth/login';
     const networkOptions = {
       method: 'POST',
       headers: {
