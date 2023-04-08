@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useForm} from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FormInput} from '../../components/common/form/FormInput';
@@ -12,32 +12,12 @@ export interface EmailSignInObj {
   email: string;
 }
 
-export const SignIn = () => {
+export const SignIn = ({navigation}) => {
   const {control, handleSubmit} = useForm<EmailSignInObj>();
 
-  const getTokenId = (): Promise<string> =>
-    AsyncStorage.getItem('authToken').then(token => {
-      if (token) {
-        return token;
-      } else {
-        const newToken = 'qwertyuiolkjhgfdsdfghjk';
-        return AsyncStorage.setItem('authToken', newToken).then(() => newToken);
-      }
-    });
-
-  const getProfile = async () => {
-    const url = 'http://192.168.214.249:3000/auth/create';
-    const networkOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userName: 'Anna9',
-        password: 'lada',
-      }),
-    };
-    fetch(url, networkOptions).then(res => res.json());
+  const onSignUpPress = () => {
+    console.log('press on sign up');
+    navigation.navigate('SignUp');
   };
 
   const onHandleSubmit = () => {
@@ -60,9 +40,8 @@ export const SignIn = () => {
   };
 
   return (
-    <>
+    <View style={styles.container}>
       <BaseText text={SIGN_UP.TITLE} customTextStyle={styles.title} />
-
       <FormInput
         name="email"
         control={control}
@@ -74,7 +53,6 @@ export const SignIn = () => {
           required: `${SIGN_UP.USERNAME_TITLE} ${SIGN_UP.INPUT_ERROR_TEXT}`,
         }}
       />
-
       <FormInput
         name="password"
         control={control}
@@ -86,19 +64,24 @@ export const SignIn = () => {
           required: `${SIGN_UP.USERNAME_TITLE} ${SIGN_UP.INPUT_ERROR_TEXT}`,
         }}
       />
-
       <Button
+        customBtnContainerStyle={{borderRadius: 38, marginTop: 48}}
         btnLabel={'Authenticate'}
         onPress={handleSubmit(onHandleSubmit)}
       />
-      <TouchableOpacity onPress={getProfile}>
-        <Text>Create user</Text>
-      </TouchableOpacity>
-    </>
+      <Button
+        customBtnContainerStyle={{borderRadius: 38, marginTop: 48}}
+        btnLabel={'Sign up'}
+        onPress={onSignUpPress}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 32,
+  },
   title: {
     marginBottom: 20,
     fontSize: 24,
@@ -115,5 +98,15 @@ const styles = StyleSheet.create({
   usernameInputTitle: {
     fontSize: 16,
     marginTop: 22,
+  },
+  signUpButton: {
+    marginTop: 48,
+    marginHorizontal: 32,
+    alignItems: 'center',
+    backgroundColor: CONSTANT_COLORS.MID_LIGHT_BLUE,
+  },
+  signUpTitle: {
+    fontSize: 32,
+    color: CONSTANT_COLORS.ALWAYS_WHITE,
   },
 });
