@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
-import { Text, StyleSheet, TextInput, TextStyle } from 'react-native';
-import { Control, Controller } from 'react-hook-form';
+import React, { ReactElement } from "react";
+import { StyleSheet, Text, TextInput, TextStyle } from "react-native";
+import { Control, Controller } from "react-hook-form";
 
 interface Props {
   name: string;
@@ -31,15 +31,17 @@ export const FormInput = (props: Props): ReactElement => {
     numberOfLines = 1,
     multiline = false,
   } = props;
-  const { customTitleStyle, customInputStyle, customErrorStyle } = props;
-  const rtlStyle: TextStyle = isRTL ? { textAlign: isRTL ? 'right' : 'left' } : {};
+  const {customTitleStyle, customInputStyle, customErrorStyle} = props;
+  const rtlStyle: TextStyle = isRTL
+    ? {textAlign: isRTL ? 'right' : 'left'}
+    : {};
   const keyboardType = onlyNumbers ? 'number-pad' : 'default';
   return (
     <Controller
       name={name}
       rules={rules}
       control={control}
-      render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+      render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
         <>
           {title && (
             <Text style={[rtlStyle, customTitleStyle]}>
@@ -53,13 +55,20 @@ export const FormInput = (props: Props): ReactElement => {
             onChangeText={onChange}
             placeholder={placeholder}
             secureTextEntry={secureTextEntry}
-            style={[styles.input, rtlStyle, { borderColor: error ? 'red' : 'lightgray' }, customInputStyle]}
+            style={[
+              styles.input,
+              rtlStyle,
+              {borderColor: error ? 'red' : 'lightgray'},
+              customInputStyle,
+            ]}
             keyboardType={keyboardType}
             numberOfLines={numberOfLines}
             multiline={multiline}
           />
           {error && (
-            <Text style={[styles.errorText, rtlStyle, customErrorStyle]}>{rules?.required || 'שדה זה הינו חובה'}</Text>
+            <Text style={[styles.errorText, rtlStyle, customErrorStyle]}>
+              {rules?.required || 'שדה זה הינו חובה'}
+            </Text>
           )}
         </>
       )}
