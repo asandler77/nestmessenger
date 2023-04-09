@@ -1,19 +1,22 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {useForm} from 'react-hook-form';
+import { StyleSheet, View } from 'react-native';
+import { useForm } from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {FormInput} from '../../components/common/form/FormInput';
-import {Button} from '../../components/common/buttons/Button';
-import {SIGN_UP} from '../../consts';
-import {CONSTANT_COLORS} from '../../constants/Colors';
-import {BaseText} from '../../constants/BaseText';
+import { FormInput } from '../../components/common/form/FormInput';
+import { Button } from '../../components/common/buttons/Button';
+import { netip, SIGN_UP } from '../../consts';
+import { CONSTANT_COLORS } from '../../constants/Colors';
+import { BaseText } from '../../constants/BaseText';
+import { store } from '../../state-mangement/store';
+import { setAuthInfo } from '../../state-mangement/slices/authSlice';
 
 export interface EmailSignInObj {
   email: string;
 }
 
-export const SignIn = ({navigation}) => {
-  const {control, handleSubmit} = useForm<EmailSignInObj>();
+export const SignIn = ({ navigation }) => {
+  const { control, handleSubmit } = useForm<EmailSignInObj>();
+  const dispatch = store.dispatch;
 
   const onSignUpPress = () => {
     console.log('press on sign up');
@@ -21,7 +24,7 @@ export const SignIn = ({navigation}) => {
   };
 
   const onHandleSubmit = () => {
-    const url = 'http://192.168.214.249:3000/auth/login';
+    const url = `http://${netip}:3000/auth/login`;
     const networkOptions = {
       method: 'POST',
       headers: {
@@ -36,6 +39,8 @@ export const SignIn = ({navigation}) => {
       .then(res => res.json())
       .then(data => {
         AsyncStorage.setItem('authToken', data.access_token);
+        console.log('dispatched');
+        dispatch(setAuthInfo());
       });
   };
 
@@ -65,12 +70,12 @@ export const SignIn = ({navigation}) => {
         }}
       />
       <Button
-        customBtnContainerStyle={{borderRadius: 38, marginTop: 48}}
+        customBtnContainerStyle={{ borderRadius: 38, marginTop: 48 }}
         btnLabel={'Authenticate'}
         onPress={handleSubmit(onHandleSubmit)}
       />
       <Button
-        customBtnContainerStyle={{borderRadius: 38, marginTop: 48}}
+        customBtnContainerStyle={{ borderRadius: 38, marginTop: 48 }}
         btnLabel={'Sign up'}
         onPress={onSignUpPress}
       />

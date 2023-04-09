@@ -1,9 +1,10 @@
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { netip } from '../../consts';
 
 export const SignUp = () => {
   const getProfile = async () => {
-    const url = 'http://192.168.214.249:3000/auth/create';
+    const url = `http://${netip}:3000/auth/create`;
     const networkOptions = {
       method: 'POST',
       headers: {
@@ -17,7 +18,7 @@ export const SignUp = () => {
     fetch(url, networkOptions).then(res => res.json());
   };
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Messenger</Text>
       <TouchableOpacity onPress={getProfile}>
         <Text>Create user</Text>

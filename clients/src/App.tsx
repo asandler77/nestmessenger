@@ -9,19 +9,21 @@
  */
 
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {AppNavigator} from './navigation/AppNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+import { AppNavigator } from './navigation/AppNavigator';
+import { Provider } from 'react-redux';
+import { store } from './state-mangement/store';
 
 const App = () => {
   if (__DEV__) {
-    import('../config/ReactotronConfig').then(() =>
-      console.log('Reactotron Configured'),
-    );
+    import('../config/ReactotronConfig').then(() => console.log('Reactotron Configured'));
   }
   return (
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 };
 

@@ -13,3 +13,5 @@ export const SIGN_UP = {
   ALTER_TITLE: 'או היכנסו עם',
   ERR_LABEL: 'אירעה שגיאה',
 };
+
+export const netip = '192.168.1.157'
