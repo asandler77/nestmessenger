@@ -12,15 +12,12 @@ export const AppNavigator = () => {
   const isSignedIn = useAppSelector(selectIsAuthenticated);
 
   useEffect(() => {
-    console.log('touched isSignedIn ====', isSignedIn);
     if (isSignedIn) {
-      console.log('if isSignedIn ====', isSignedIn);
       setIsAuthenticatedUser(true);
     }
   }, [isSignedIn]);
-  console.log('isAuthenticated===', isAuthenticatedUser);
   return (
-    <RootStack.Navigator>
+    <RootStack.Navigator screenOptions={{ headerShown: false }}>
       {isAuthenticatedUser ? (
         <RootStack.Screen name="Messenger" component={Messenger} />
       ) : (

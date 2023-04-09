@@ -1,4 +1,4 @@
-export const SIGN_UP = {
+export const LABELS = {
   TITLE: 'כניסה לחשבון',
   FIRST_NAME_TITLE: 'שם פרטי',
   FIRST_NAME_PLACEHOLDER: 'הזינו שם פרטי',
@@ -12,6 +12,8 @@ export const SIGN_UP = {
   INPUT_ERROR_TEXT: 'הינו שדה חובה',
   ALTER_TITLE: 'או היכנסו עם',
   ERR_LABEL: 'אירעה שגיאה',
+  INSERT_THE_TEXT: 'תרשום את הטקסט',
+  SEND_MESSAGE: 'שלח את ההודעה',
 };
 
-export const netip = '192.168.1.157'
+export const netip = '192.168.1.157';

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FormInput } from '../../components/common/form/FormInput';
 import { Button } from '../../components/common/buttons/Button';
-import { netip, SIGN_UP } from '../../consts';
+import { netip, LABELS } from '../../consts';
 import { CONSTANT_COLORS } from '../../constants/Colors';
 import { BaseText } from '../../constants/BaseText';
 import { store } from '../../state-mangement/store';
@@ -39,34 +39,33 @@ export const SignIn = ({ navigation }) => {
       .then(res => res.json())
       .then(data => {
         AsyncStorage.setItem('authToken', data.access_token);
-        console.log('dispatched');
         dispatch(setAuthInfo());
       });
   };
 
   return (
     <View style={styles.container}>
-      <BaseText text={SIGN_UP.TITLE} customTextStyle={styles.title} />
+      <BaseText text={LABELS.TITLE} customTextStyle={styles.title} />
       <FormInput
         name="email"
         control={control}
-        title={SIGN_UP.USERNAME_TITLE}
+        title={LABELS.USERNAME_TITLE}
         customInputStyle={styles.inputContainer}
-        placeholder={SIGN_UP.USERNAME_PLACEHOLDER}
+        placeholder={LABELS.USERNAME_PLACEHOLDER}
         customTitleStyle={styles.usernameInputTitle}
         rules={{
-          required: `${SIGN_UP.USERNAME_TITLE} ${SIGN_UP.INPUT_ERROR_TEXT}`,
+          required: `${LABELS.USERNAME_TITLE} ${LABELS.INPUT_ERROR_TEXT}`,
         }}
       />
       <FormInput
         name="password"
         control={control}
-        title={SIGN_UP.PASSWORD_TITLE}
+        title={LABELS.PASSWORD_TITLE}
         customInputStyle={styles.inputContainer}
         customTitleStyle={styles.usernameInputTitle}
         placeholder={'הכניסו סיסמה'}
         rules={{
-          required: `${SIGN_UP.USERNAME_TITLE} ${SIGN_UP.INPUT_ERROR_TEXT}`,
+          required: `${LABELS.USERNAME_TITLE} ${LABELS.INPUT_ERROR_TEXT}`,
         }}
       />
       <Button
