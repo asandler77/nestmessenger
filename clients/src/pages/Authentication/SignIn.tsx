@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useForm } from 'react-hook-form';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FormInput } from '../../components/common/form/FormInput';
 import { Button } from '../../components/common/buttons/Button';
-import { netip, LABELS } from '../../consts';
+import { LABELS } from '../../consts';
 import { CONSTANT_COLORS } from '../../constants/Colors';
 import { BaseText } from '../../constants/BaseText';
 import { store } from '../../state-mangement/store';
 import { setAuthInfo } from '../../state-mangement/slices/authSlice';
+import { handleLogIn } from '../../services/authService';
 
 export interface EmailSignInObj {
   email: string;
@@ -19,28 +19,15 @@ export const SignIn = ({ navigation }) => {
   const dispatch = store.dispatch;
 
   const onSignUpPress = () => {
-    console.log('press on sign up');
     navigation.navigate('SignUp');
   };
 
+  const updateIsAuthenticated = () => {
+    dispatch(setAuthInfo());
+  };
+
   const onHandleSubmit = () => {
-    const url = `http://${netip}:3000/auth/login`;
-    const networkOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userName: 'Anna91',
-        password: 'lada',
-      }),
-    };
-    fetch(url, networkOptions)
-      .then(res => res.json())
-      .then(data => {
-        AsyncStorage.setItem('authToken', data.access_token);
-        dispatch(setAuthInfo());
-      });
+    handleLogIn(updateIsAuthenticated);
   };
 
   return (
