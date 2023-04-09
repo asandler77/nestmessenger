@@ -1,62 +1,67 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { FormInput } from '../../components/common/form/FormInput';
-import { LABELS } from '../../consts';
-import { Button } from '../../components/common/buttons/Button';
+import React, { useEffect, useState } from 'react';
+import { netip } from '../../consts';
 import { useForm } from 'react-hook-form';
-import { CONSTANT_COLORS } from '../../constants/Colors';
+import { io } from 'socket.io-client';
+import { GiftedChat, QuickReplies, User } from 'react-native-gifted-chat';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+
+export interface IMessage {
+  _id: string | number;
+  text: string;
+  createdAt: Date | number;
+  user: User;
+  image?: string;
+  video?: string;
+  audio?: string;
+  system?: boolean;
+  sent?: boolean;
+  received?: boolean;
+  pending?: boolean;
+  quickReplies?: QuickReplies;
+}
+
+const socket = io(`http://${netip}:3000`);
 
 export const Messenger = () => {
   const { control, handleSubmit } = useForm();
+  const [messages, setMessages] = useState([]);
 
-  const onHandleSubmit = () => {
-    console.log('send message');
+  useEffect(() => {
+    socket.on('chat message', message => {
+      setMessages(previousMessages => GiftedChat.append(previousMessages, message));
+    });
+    fetch('http://localhost:3000/chat')
+      .then(res => res.json())
+      .then(data => {
+        const responseMessages = data.map(message => {
+          return {
+            _id: message._id,
+            text: message.message,
+            createdAt: message.createdAt,
+            user: {
+              _id: message.sender,
+              name: message.sender,
+            },
+          };
+        });
+        setMessages(responseMessages);
+      });
+  }, []);
+
+  const onSend = (newMessages = []) => {
+    socket.emit('chat message', newMessages[0].text);
+    setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages));
   };
 
   return (
-    <View style={styles.container}>
-      <FormInput
-        name="password"
-        control={control}
-        title={''}
-        customInputStyle={styles.inputContainer}
-        customTitleStyle={styles.usernameInputTitle}
-        placeholder={'הכניסו סיסמה'}
-        // rules={{
-        //   required: ` ${SIGN_UP.INPUT_ERROR_TEXT}`,
-        // }}
-      />
-      <Button
-        customBtnContainerStyle={{ borderRadius: 38, marginTop: 48 }}
-        btnLabel={LABELS.SEND_MESSAGE}
-        onPress={handleSubmit(onHandleSubmit)}
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <GiftedChat messages={messages} onSend={newMessages => onSend(newMessages)} user={{ _id: '1' }} />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 48,
-    marginHorizontal: 32,
-  },
-  title: {
-    marginBottom: 20,
-    fontSize: 24,
-  },
-  inputContainer: {
-    fontSize: 20,
-    borderRadius: 3,
-    backgroundColor: CONSTANT_COLORS.ALWAYS_WHITE,
-  },
-  btnContainer: {
-    marginTop: 32,
-    marginBottom: 40,
-  },
-  usernameInputTitle: {
-    fontSize: 16,
-    marginTop: 22,
   },
 });
