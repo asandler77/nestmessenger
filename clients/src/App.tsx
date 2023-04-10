@@ -15,9 +15,6 @@ import { Provider } from 'react-redux';
 import { store } from './state-mangement/store';
 
 const App = () => {
-  if (__DEV__) {
-    import('../config/ReactotronConfig').then(() => console.log('Reactotron Configured'));
-  }
   return (
     <Provider store={store}>
       <NavigationContainer>
