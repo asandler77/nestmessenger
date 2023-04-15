@@ -17,3 +17,4 @@ export const LABELS = {
 };
 
 export const netip = '192.168.1.157';
+// "mongodb+srv://shwartzalexey77:192.168.1.1574wEa6Z1yfTxh7xKX@cluster0.swos6rl.mongodb.net/?retryWrites=true&w=majority"

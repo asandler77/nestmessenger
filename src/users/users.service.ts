@@ -10,6 +10,8 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async findOne(userName: string) {
+    console.log('findOne=========', userName)
+
     return this.userModel.findOne({ userName }).exec()
   }
 
