@@ -30,7 +30,7 @@ export const Messenger = () => {
     socket.on('chat message', message => {
       setMessages(previousMessages => GiftedChat.append(previousMessages, message));
     });
-    fetch(`http://${netip}:3000/chats`)
+    fetch(`http://${netip}:3000/chats/1`)
       .then(res => res.json())
       .then(data => {
         const responseMessages = data.map(message => {
