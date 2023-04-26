@@ -1,4 +1,12 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Request,
+} from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { User } from "../schemas/user.schema";
 
@@ -20,8 +28,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.CREATED)
   @Post("create")
-  createUser(@Body() signInDto: User){
+  createUser(@Body() signInDto: User) {
     return this.authService.createUser(signInDto);
   }
-
 }

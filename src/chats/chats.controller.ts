@@ -4,22 +4,23 @@ import { ChatsService } from "./chats.service";
 import { JwtAuthchatGuard } from "./jwt-authchat.guard";
 import { CreateChatDto } from "../dto/create-chat.dto";
 
-@ApiTags("chats")
+// @ApiTags("chats")
 @Controller("chats")
 export class ChatsController {
   constructor(private readonly chatService: ChatsService) {}
 
-  @UseGuards(JwtAuthchatGuard)
+  // @UseGuards(JwtAuthchatGuard)
   @Post("create-chat")
   @ApiResponse({
     status: 201,
-    description: "The chat has been successfuly created!!",
+    description: "The chat has been successfully created!!",
   })
   async createChat(@Body() createChatDto: CreateChatDto) {
+    console.log("inside create-chat");
     return await this.chatService.createChat(createChatDto);
   }
 
-  @UseGuards(JwtAuthchatGuard)
+  // @UseGuards(JwtAuthchatGuard)
   @Get(":id")
   async getAllChatsByUserId(@Param(":id") id: string) {
     return await this.chatService.findAllChats(id);
