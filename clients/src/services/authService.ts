@@ -9,7 +9,7 @@ export const handleLogIn = (dispatchLogIn: () => void) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      userName: 'Anna91',
+      userName: 'Anna9',
       password: 'lada',
     }),
   };

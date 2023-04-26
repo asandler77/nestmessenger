@@ -20,7 +20,7 @@ export const SignUp = () => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Messenger</Text>
-      <TouchableOpacity onPress={getProfile}>
+      <TouchableOpacity onPress={getProfile} style={{ backgroundColor: 'grey' }}>
         <Text>Create user</Text>
       </TouchableOpacity>
     </View>

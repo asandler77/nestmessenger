@@ -10,14 +10,14 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async findOne(userName: string) {
-    console.log('findOne=========', userName)
+    console.log("find user===", userName);
 
-    return this.userModel.findOne({ userName }).exec()
+    return this.userModel.findOne({ userName }).exec();
   }
 
   async create(createUserDto: User): Promise<User> {
     const createdUser = new this.userModel(createUserDto);
-    console.log('signin')
+    console.log("create user");
     return createdUser.save();
   }
 

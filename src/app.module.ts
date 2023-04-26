@@ -4,16 +4,27 @@ import { AppService } from "./app.service";
 import { AuthModule } from "./auth/auth.module";
 import { UsersModule } from "./users/users.module";
 import { MongooseModule } from "@nestjs/mongoose";
+import { MONGO_DB_URL } from "../constants";
+import { MessagesModule } from "./messages/messages.module";
+import { AppSocketGW } from "./app.socketgw";
+import { ChatsModule } from "./chats/chatsModule";
+import { ChatsService } from "./chats/chats.service";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      "mongodb+srv://shwartzalexey77:8iQgDluhGDK9odw8@cluster0.hvtvmkx.mongodb.net/?retryWrites=true&w=majority"
-    ),
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(MONGO_DB_URL),
     AuthModule,
     UsersModule,
+    ChatsModule,
+    MessagesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, UsersModule],
+  controllers: [
+    AppController,
+    // ChatsController
+  ],
+  // redundant providers???
+  providers: [AppService, UsersModule, ChatsModule, AppSocketGW],
 })
 export class AppModule {}
