@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { FormInput } from '../../components/common/form/FormInput';
@@ -9,6 +9,8 @@ import { BaseText } from '../../constants/BaseText';
 import { store } from '../../state-mangement/store';
 import { setAuthInfo } from '../../state-mangement/slices/authSlice';
 import { handleLogIn } from '../../services/authService';
+import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { customEasingReanimated } from "../../animatedTypes";
 
 export interface EmailSignInObj {
   email: string;
@@ -17,6 +19,26 @@ export interface EmailSignInObj {
 export const SignIn = ({ navigation }) => {
   const { control, handleSubmit } = useForm<EmailSignInObj>();
   const dispatch = store.dispatch;
+  const shValue = useSharedValue(0);
+
+  useEffect(() => {
+    startSignInAnimation();
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: shValue.value,
+      // transform: [{ translateX: interpolate(shValue.value, [0, 1], [0, 30]) }],
+      transform: [{ translateY: interpolate(shValue.value,[0, 1], [100, 0] ) }],
+    };
+  });
+
+  const startSignInAnimation = () => {
+    shValue.value = withTiming(1, {
+      duration: 4000,
+      easing: customEasingReanimated.expoOutApp,
+    });
+  };
 
   const onSignUpPress = () => {
     navigation.navigate('SignUp');
@@ -31,41 +53,43 @@ export const SignIn = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <BaseText text={LABELS.TITLE} customTextStyle={styles.title} />
-      <FormInput
-        name="email"
-        control={control}
-        title={LABELS.USERNAME_TITLE}
-        customInputStyle={styles.inputContainer}
-        placeholder={LABELS.USERNAME_PLACEHOLDER}
-        customTitleStyle={styles.usernameInputTitle}
-        rules={{
-          required: `${LABELS.USERNAME_TITLE} ${LABELS.INPUT_ERROR_TEXT}`,
-        }}
-      />
-      <FormInput
-        name="password"
-        control={control}
-        title={LABELS.PASSWORD_TITLE}
-        customInputStyle={styles.inputContainer}
-        customTitleStyle={styles.usernameInputTitle}
-        placeholder={'הכניסו סיסמה'}
-        rules={{
-          required: `${LABELS.USERNAME_TITLE} ${LABELS.INPUT_ERROR_TEXT}`,
-        }}
-      />
-      <Button
-        customBtnContainerStyle={{ borderRadius: 38, marginTop: 48 }}
-        btnLabel={'Authenticate'}
-        onPress={handleSubmit(onHandleSubmit)}
-      />
-      <Button
-        customBtnContainerStyle={{ borderRadius: 38, marginTop: 48 }}
-        btnLabel={'Sign up'}
-        onPress={onSignUpPress}
-      />
-    </View>
+    <Animated.View style={animatedStyle}>
+      <View style={[styles.container]}>
+        <BaseText text={LABELS.TITLE} customTextStyle={styles.title} />
+        <FormInput
+          name="email"
+          control={control}
+          title={LABELS.USERNAME_TITLE}
+          customInputStyle={styles.inputContainer}
+          placeholder={LABELS.USERNAME_PLACEHOLDER}
+          customTitleStyle={styles.usernameInputTitle}
+          rules={{
+            required: `${LABELS.USERNAME_TITLE} ${LABELS.INPUT_ERROR_TEXT}`,
+          }}
+        />
+        <FormInput
+          name="password"
+          control={control}
+          title={LABELS.PASSWORD_TITLE}
+          customInputStyle={styles.inputContainer}
+          customTitleStyle={styles.usernameInputTitle}
+          placeholder={'הכניסו סיסמה'}
+          rules={{
+            required: `${LABELS.USERNAME_TITLE} ${LABELS.INPUT_ERROR_TEXT}`,
+          }}
+        />
+        <Button
+          customBtnContainerStyle={{ borderRadius: 38, marginTop: 48 }}
+          btnLabel={'Authenticate'}
+          onPress={handleSubmit(onHandleSubmit)}
+        />
+        <Button
+          customBtnContainerStyle={{ borderRadius: 38, marginTop: 48 }}
+          btnLabel={'Sign up'}
+          onPress={onSignUpPress}
+        />
+      </View>
+    </Animated.View>
   );
 };
 
