@@ -20,3 +20,18 @@ export const handleLogIn = (dispatchLogIn: () => void) => {
       dispatchLogIn();
     });
 };
+
+export const createUser = async () => {
+  const url = `http://${netip}:3000/auth/create`;
+  const networkOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userName: 'Alexey',
+      password: 'Alexey',
+    }),
+  };
+  fetch(url, networkOptions).then(res => res.json());
+};
