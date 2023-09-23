@@ -16,8 +16,8 @@ export class MoviesService {
     return await this.moviesRepository.deleteAll();
   }
 
-  findAll() {
-    return `This action returns all movies`;
+  async findAll(): Promise<any> {
+    return await this.moviesRepository.findAll();
   }
 
   findOne(id: number) {

@@ -17,4 +17,8 @@ export class MoviesRepository {
   async deleteAll(): Promise<any> {
     await this.movieModel.deleteMany({});
   }
+
+  async findAll(): Promise<any> {
+    return this.movieModel.find().exec();
+  }
 }
