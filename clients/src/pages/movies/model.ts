@@ -1,6 +1,5 @@
 export interface MovieModel {
-  id: string;
   name: string;
-  score: number;
+  score: string;
   url: string;
 }

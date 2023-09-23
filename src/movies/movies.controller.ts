@@ -23,6 +23,7 @@ export class MoviesController {
     description: "The movie was added successfully.",
   })
   async create(@Body() createMovieDto: CreateMovieDto) {
+    console.log("Controller----", createMovieDto);
     return await this.moviesService.create(createMovieDto);
   }
 

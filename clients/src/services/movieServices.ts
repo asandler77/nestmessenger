@@ -1,6 +1,7 @@
 import { netip } from '../consts';
+import { MovieModel } from '../pages/movies/model';
 
-export const addMovie = (movieName: string) => {
+export const addMovie = (movie: MovieModel) => {
   const url = `http://${netip}:3000/movies/add-movie`;
   const networkOptions = {
     method: 'POST',
@@ -8,7 +9,9 @@ export const addMovie = (movieName: string) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      movie: movieName,
+      name: movie.name,
+      url: movie.url,
+      score: movie.score,
     }),
   };
   fetch(url, networkOptions).then(res => res.json());

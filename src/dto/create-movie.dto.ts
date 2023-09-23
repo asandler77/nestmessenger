@@ -5,5 +5,15 @@ export class CreateMovieDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  movie: string;
+  name: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  score: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  url: string;
 }

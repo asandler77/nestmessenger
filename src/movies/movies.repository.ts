@@ -11,14 +11,10 @@ export class MoviesRepository {
   ) {}
 
   async addMovie(movie: CreateMovieDto): Promise<any> {
-    // redundant return
-
-    const addMovieToDb = await this.movieModel.create(movie);
-    return addMovieToDb;
+    return await this.movieModel.create(movie);
   }
 
   async deleteAll(): Promise<any> {
-
     await this.movieModel.deleteMany({});
   }
 }
