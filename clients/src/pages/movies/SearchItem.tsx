@@ -11,11 +11,12 @@ export const SearchItem = ({ value, onChange }: { value: string; onChange: (d: s
 
 const styles = StyleSheet.create({
   input: {
-    borderRadius: 8,
+    borderRadius: 16,
     borderWidth: 2,
     margin: 16,
     lineHeight: 32,
     fontSize: 28,
-    paddingHorizontal: 8
+    paddingHorizontal: 8,
+    backgroundColor: 'white',
   },
 });

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Movies } from './Movies';
 import { MovieOverview } from './MovieOverview';
 import { MovieModel } from './model';
 import { SearchItem } from './SearchItem';
+import { addMovie, deleteAll } from '../../services/movieServices';
 
 const movies: MovieModel[] = [
   {
@@ -40,15 +41,44 @@ export const MainScreen = () => {
     setSelectedMovie(movie);
   };
 
+  const onAddMovie = () => {
+    addMovie();
+  };
   const onChangeItem = (item: string) => {
     console.log('onChangeItem');
     setSearchItem(item);
+  };
+
+  const onDeleteMovie = () => {
+    deleteAll();
   };
   return (
     <SafeAreaView style={styles.movies}>
       <MovieOverview movie={selectedMovie} />
       <Movies movies={movies} onSelectCB={onSelectCB} />
       <SearchItem value={searchItem} onChange={onChangeItem} />
+      <TouchableOpacity
+        style={{
+          borderRadius: 16,
+          borderWidth: 2,
+          margin: 16,
+          paddingHorizontal: 8,
+          backgroundColor: 'white',
+        }}
+        onPress={onAddMovie}>
+        <Text>Add movie</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          borderRadius: 16,
+          borderWidth: 2,
+          margin: 16,
+          paddingHorizontal: 8,
+          backgroundColor: 'white',
+        }}
+        onPress={onDeleteMovie}>
+        <Text>Delete all</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };

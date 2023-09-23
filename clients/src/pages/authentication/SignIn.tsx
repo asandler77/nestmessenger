@@ -28,7 +28,6 @@ export const SignIn = ({ navigation }) => {
   const animatedStyle = useAnimatedStyle(() => {
     return {
       opacity: shValue.value,
-      // transform: [{ translateX: interpolate(shValue.value, [0, 1], [0, 30]) }],
       transform: [{ translateY: interpolate(shValue.value, [0, 1], [100, 0]) }],
     };
   });

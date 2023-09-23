@@ -4,7 +4,7 @@ import { Control, Controller } from "react-hook-form";
 
 interface Props {
   name: string;
-  control: Control<any>; // TODO(Avshalom): figure out TS generics with props
+  control: Control<any>;
   placeholder: string;
   title?: string;
   isRTL?: boolean;

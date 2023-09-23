@@ -1,4 +1,3 @@
-import { HydratedDocument } from "mongoose";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 @Schema()

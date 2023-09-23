@@ -8,8 +8,8 @@ import { MONGO_DB_URL } from "../constants";
 import { MessagesModule } from "./messages/messages.module";
 import { AppSocketGW } from "./app.socketgw";
 import { ChatsModule } from "./chats/chatsModule";
-import { ChatsService } from "./chats/chats.service";
 import { ConfigModule } from "@nestjs/config";
+import { MoviesModule } from "./movies/movies.module";
 
 @Module({
   imports: [
@@ -19,6 +19,7 @@ import { ConfigModule } from "@nestjs/config";
     UsersModule,
     ChatsModule,
     MessagesModule,
+    MoviesModule,
   ],
   controllers: [
     AppController,
