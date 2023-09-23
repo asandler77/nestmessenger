@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
-import {Movies} from './Movies';
-import {MovieOverview} from './MovieOverview';
-import {MovieModel} from './model';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import { Movies } from './Movies';
+import { MovieOverview } from './MovieOverview';
+import { MovieModel } from './model';
+import { SearchItem } from './SearchItem';
 
 const movies: MovieModel[] = [
   {
@@ -33,14 +34,21 @@ const movies: MovieModel[] = [
 
 export const MainScreen = () => {
   const [selectedMovie, setSelectedMovie] = useState<MovieModel>(movies[0]);
+  const [searchItem, setSearchItem] = useState('');
 
   const onSelectCB = (movie: MovieModel) => {
     setSelectedMovie(movie);
+  };
+
+  const onChangeItem = (item: string) => {
+    console.log('onChangeItem');
+    setSearchItem(item);
   };
   return (
     <SafeAreaView style={styles.movies}>
       <MovieOverview movie={selectedMovie} />
       <Movies movies={movies} onSelectCB={onSelectCB} />
+      <SearchItem value={searchItem} onChange={onChangeItem} />
     </SafeAreaView>
   );
 };

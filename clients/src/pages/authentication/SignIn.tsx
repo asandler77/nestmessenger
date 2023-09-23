@@ -9,8 +9,8 @@ import { BaseText } from '../../constants/BaseText';
 import { store } from '../../state-mangement/store';
 import { setAuthInfo } from '../../state-mangement/slices/authSlice';
 import { handleLogIn } from '../../services/authService';
-import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import { customEasingReanimated } from "../../animatedTypes";
+import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { customEasingReanimated } from '../../animatedTypes';
 
 export interface EmailSignInObj {
   email: string;
@@ -29,7 +29,7 @@ export const SignIn = ({ navigation }) => {
     return {
       opacity: shValue.value,
       // transform: [{ translateX: interpolate(shValue.value, [0, 1], [0, 30]) }],
-      transform: [{ translateY: interpolate(shValue.value,[0, 1], [100, 0] ) }],
+      transform: [{ translateY: interpolate(shValue.value, [0, 1], [100, 0]) }],
     };
   });
 

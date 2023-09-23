@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Messenger } from '../pages/Messenger/Messenger';
+import { Messenger } from '../pages/messenger/Messenger';
 import { AuthNavigator } from './AuthNavigator';
 import { selectIsAuthenticated } from '../state-mangement/authSelectors';
 import { useAppSelector } from '../state-mangement/storeUtils';

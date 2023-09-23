@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AuthState, AuthStatus } from '../../pages/Authentication/typed';
+import { AuthState, AuthStatus } from '../../pages/authentication/typed';
 
 const initialState: AuthState = {
   status: AuthStatus.LOGGED_OUT,
