@@ -42,10 +42,9 @@ export const MainScreen = () => {
   };
 
   const onAddMovie = () => {
-    addMovie();
+    addMovie(searchItem);
   };
   const onChangeItem = (item: string) => {
-    console.log('onChangeItem');
     setSearchItem(item);
   };
 

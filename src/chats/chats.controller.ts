@@ -16,7 +16,6 @@ export class ChatsController {
     description: "The chat has been successfully created!!",
   })
   async createChat(@Body() createChatDto: CreateChatDto) {
-    console.log("inside create-chat");
     return await this.chatService.createChat(createChatDto);
   }
 

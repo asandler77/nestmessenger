@@ -9,7 +9,6 @@ interface Props {
 
 export const Movie = (props: Props) => {
   const {movie, onSelectCB} = props;
-  console.log('url====', movie.url);
   const onPress = () => {
     onSelectCB(movie);
   };

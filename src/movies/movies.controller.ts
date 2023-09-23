@@ -28,8 +28,6 @@ export class MoviesController {
 
   @Delete("delete-all")
   removeAll() {
-    console.log('delete');
-
     return this.moviesService.removeAll();
   }
 

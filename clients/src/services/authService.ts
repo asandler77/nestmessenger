@@ -18,7 +18,8 @@ export const handleLogIn = (dispatchLogIn: () => void) => {
     .then(data => {
       AsyncStorage.setItem('authToken', data.access_token);
       dispatchLogIn();
-    });
+    })
+    .catch(err => console.log(err));
 };
 
 export const createUser = async () => {
