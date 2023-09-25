@@ -1,5 +1,4 @@
 import { netip } from '../consts';
-import { MovieModel } from '../pages/movies/model';
 import { showToast } from '../components/common/Toasts';
 
 export const getAll = async () => {

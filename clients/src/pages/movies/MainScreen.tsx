@@ -4,40 +4,39 @@ import { Movies } from './Movies';
 import { MovieOverview } from './MovieOverview';
 import { MovieModel } from './model';
 import { SearchItem } from './SearchItem';
-import { getAll } from '../../services/movieServices';
-
-// const movies1: MovieModel[] = [
-//   {
-//     name: 'Predator',
-//     score: '4',
-//     url: 'https://upload.wikimedia.org/wikipedia/en/9/95/Predator_Movie.jpg',
-//   },
-//   {
-//     name: 'Rocky',
-//     score: '2',
-//     url: 'https://upload.wikimedia.org/wikipedia/en/1/18/Rocky_poster.jpg',
-//   },
-//   {
-//     name: 'Jurassic park',
-//     score: '1',
-//     url: 'https://upload.wikimedia.org/wikipedia/en/e/e7/Jurassic_Park_poster.jpg',
-//   },
-//   {
-//     name: 'Total recall',
-//     score: '3',
-//     url: 'https://upload.wikimedia.org/wikipedia/en/2/2d/Total_Recall_%281990_film%29_poster.jpg',
-//   },
-// ];
+import { useGetAllMoviesQuery } from '../../services/movieServices1';
+import { showToast } from '../../components/common/Toasts';
 
 export const MainScreen = ({ navigation }) => {
   const [searchItem, setSearchItem] = useState('');
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState<MovieModel>(movies[0]);
-
+  const { data, isLoading, isError, refetch } = useGetAllMoviesQuery({});
 
   useEffect(() => {
-    getAll().then(allMovies => setMovies(allMovies));
+    showAllMovies();
   }, []);
+
+  const showAllMovies = () => {
+    refetch()
+      .then(() => {
+        if (isLoading) {
+          return (
+            <>
+              <Text>Loading...</Text>
+            </>
+          );
+        } else if (isError) {
+          showToast('error', 'Some thing went wrong', 'Try again later');
+        } else {
+          setMovies(data);
+          showToast('success', 'The action executed successfully', 'All movies retrieved');
+        }
+      })
+      .catch((err: any) => {
+        showToast('error', 'Some thing went wrong', `${err}`);
+      });
+  };
 
   const onSelectCB = (movie: MovieModel) => {
     setSelectedMovie(movie);

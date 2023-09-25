@@ -37,7 +37,7 @@ export class MoviesController {
 
   @ApiOperation({ summary: "Get movies from DB" })
   @ApiResponse({ status: "2XX" })
-  @Get()
+  @Get("movies")
   findAll() {
     return this.moviesService.findAll();
   }
