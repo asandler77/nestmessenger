@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { netip } from '../consts';
+import { MovieModel } from "../pages/movies/model";
+
 export const deleteApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `http://${netip}:3000/movies` }),
   endpoints: builder => ({
@@ -9,7 +11,18 @@ export const deleteApi = createApi({
         method: 'DELETE',
       }),
     }),
+    addMovie: builder.mutation({
+      query: (movie: MovieModel) => ({
+        url: 'add-movie',
+        method: 'POST',
+        body: {
+          name: movie.name,
+          url: movie.url,
+          score: movie.score,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useDeleteAllMoviesMutation } = deleteApi;
+export const { useDeleteAllMoviesMutation, useAddMovieMutation } = deleteApi;

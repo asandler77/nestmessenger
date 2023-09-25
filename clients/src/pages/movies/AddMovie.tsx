@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { addMovie } from '../../services/movieServices';
 import { SearchItem } from './SearchItem';
 import { MovieModel } from './model';
-import { useDeleteAllMoviesMutation } from '../../services/movieServices1';
+import { useAddMovieMutation, useDeleteAllMoviesMutation } from '../../services/movieServices1';
+
 import { showToast } from '../../components/common/Toasts';
 
 export const AddMovie = ({ navigation }) => {
   const [name, setName] = useState('');
   const [score, setScore] = useState('');
   const [url, setUrl] = useState('');
-  const [deleteAllMovies, { isLoading, isError }] = useDeleteAllMoviesMutation();
+  const [deleteAllMovies, { isLoading: isDeleteLoading, isError: isDeleteError }] = useDeleteAllMoviesMutation();
+  const [addMovie, { isLoading: isAddMovieLoading, isError: isAddMovieError }] = useAddMovieMutation();
 
   const onDeleteMovie = () => {
     deleteAllMovies({})
       .then(() => {
-        if (isLoading) {
+        if (isDeleteLoading) {
           return (
             <>
               <Text>Loading...</Text>
             </>
           );
-        } else if (isError) {
+        } else if (isDeleteError) {
           showToast('error', 'Some thing went wrong', 'Try again later');
         } else {
           showToast('success', 'The action executed successfully', 'All movies deleted');
@@ -50,7 +51,23 @@ export const AddMovie = ({ navigation }) => {
       name,
       score,
     };
-    addMovie(movie);
+    addMovie(movie)
+      .then(() => {
+        if (isAddMovieLoading) {
+          return (
+            <>
+              <Text>Loading...</Text>
+            </>
+          );
+        } else if (isAddMovieError) {
+          showToast('error', 'Some thing went wrong', 'Try again later');
+        } else {
+          showToast('success', 'The action executed successfully', 'Movie was added to DB...');
+        }
+      })
+      .catch(err => {
+        showToast('error', 'Some thing went wrong', `${err}`);
+      });
   };
 
   return (
