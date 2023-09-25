@@ -1,36 +1,35 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { addMovie, deleteAll } from '../../services/movieServices';
+import { addMovie } from '../../services/movieServices';
 import { SearchItem } from './SearchItem';
 import { MovieModel } from './model';
-import { useDispatch } from 'react-redux';
 import { useDeleteAllMoviesMutation } from '../../services/movieServices1';
+import { showToast } from '../../components/common/Toasts';
 
 export const AddMovie = ({ navigation }) => {
   const [name, setName] = useState('');
   const [score, setScore] = useState('');
   const [url, setUrl] = useState('');
-  const dispatch = useDispatch();
-  const [deleteApi, { isLoading, isError }] = useDeleteAllMoviesMutation();
+  const [deleteAllMovies, { isLoading, isError }] = useDeleteAllMoviesMutation();
 
-  // const dispatch = useDispatch();
-  // const [deletePost, { isLoading, isError }] = useDeletePostMutation();
-  //
-  // const handleDeleteClick = () => {
-  //   // Trigger the delete mutation when the button is clicked
-  //   deletePost(postId)
-  //     .then(() => {
-  //       // Optionally handle success here
-  //       console.log('Post deleted successfully.');
-  //     })
-  //     .catch((error) => {
-  //       // Handle error if the delete operation fails
-  //       console.error('Error deleting post:', error);
-  //     });
-  // };
-  //
   const onDeleteMovie = () => {
-    deleteAll();
+    deleteAllMovies({})
+      .then(() => {
+        if (isLoading) {
+          return (
+            <>
+              <Text>Loading...</Text>
+            </>
+          );
+        } else if (isError) {
+          showToast('error', 'Some thing went wrong', 'Try again later');
+        } else {
+          showToast('success', 'The action executed successfully', 'All movies deleted');
+        }
+      })
+      .catch(err => {
+        showToast('error', 'Some thing went wrong', `${err}`);
+      });
   };
 
   const onChangeName = (value: string) => {

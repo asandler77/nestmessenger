@@ -2,10 +2,10 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
+  Get, NotFoundException,
   Param,
   Patch,
-  Post,
+  Post
 } from "@nestjs/common";
 import { MoviesService } from "./movies.service";
 import { CreateMovieDto } from "../dto/create-movie.dto";

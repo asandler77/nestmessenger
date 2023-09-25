@@ -8,7 +8,6 @@ export class MoviesService {
   constructor(private readonly moviesRepository: MoviesRepository) {}
 
   async create(createMovieDto: CreateMovieDto) {
-    console.log("MoviesService----", createMovieDto);
     return await this.moviesRepository.addMovie(createMovieDto);
   }
 

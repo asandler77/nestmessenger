@@ -46,15 +46,6 @@ export const addMovie = async (movie: MovieModel) => {
   }
 };
 
-// const showToast = (type: string, text1: string, text2: string) => {
-//   Toast.show({
-//     type,
-//     text1,
-//     text2,
-//     position: 'bottom',
-//   });
-// };
-
 export const deleteAll = async () => {
   const url = `http://${netip}:3000/movies/delete-all`;
   const networkOptions = {
