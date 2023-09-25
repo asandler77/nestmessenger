@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { netip } from '../consts';
-import { MovieModel } from '../pages/movies/model';
+import { MovieModel } from "../tabs/movies/model";
 
 export const deleteApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `http://${netip}:3000/movies` }),

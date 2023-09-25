@@ -6,15 +6,23 @@ import { MovieModel } from './model';
 import { SearchItem } from './SearchItem';
 import { showToast } from '../../components/common/Toasts';
 import { useGetAllMoviesQuery } from '../../services/movieServices';
+import { useIsFocused } from '@react-navigation/native';
 
 export const MainScreen = ({ navigation }) => {
   const [searchItem, setSearchItem] = useState('');
   const [selectedMovie, setSelectedMovie] = useState<MovieModel | null>(null);
   const { data, isLoading, isError, refetch } = useGetAllMoviesQuery({});
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     refetch();
   }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      refetch();
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     !!data && data.length > 0 && setSelectedMovie(data[0]);
