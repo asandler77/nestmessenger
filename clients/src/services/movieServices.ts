@@ -1,6 +1,6 @@
 import { netip } from '../consts';
 import { MovieModel } from '../pages/movies/model';
-import { response } from 'express';
+import { showToast } from '../components/common/Toasts';
 
 export const getAll = async () => {
   const url = `http://${netip}:3000/movies`;
@@ -10,7 +10,10 @@ export const getAll = async () => {
   try {
     const res = await fetch(url, networkOptions);
     if (!res.ok) {
-      throw new Error('Network response was not ok');
+      showToast('error', 'Some thing went wrong', 'Try again later');
+      // throw new Error('Network response was not ok');
+    } else {
+      showToast('success', 'The action executed successfully', 'All movies loaded successfully');
     }
 
     const movies = await res.json();
@@ -21,7 +24,7 @@ export const getAll = async () => {
   }
 };
 
-export const addMovie = (movie: MovieModel) => {
+export const addMovie = async (movie: MovieModel) => {
   const url = `http://${netip}:3000/movies/add-movie`;
   const networkOptions = {
     method: 'POST',
@@ -34,15 +37,40 @@ export const addMovie = (movie: MovieModel) => {
       score: movie.score,
     }),
   };
-  fetch(url, networkOptions).then(res => res.json());
+  const res = await fetch(url, networkOptions);
+  if (!res.ok) {
+    showToast('error', 'Some thing went wrong', 'Try again later');
+    // throw new Error('Network response was not ok');
+  } else {
+    showToast('success', 'The action executed successfully', 'Movie added successfully');
+  }
 };
 
-export const deleteAll = () => {
+// const showToast = (type: string, text1: string, text2: string) => {
+//   Toast.show({
+//     type,
+//     text1,
+//     text2,
+//     position: 'bottom',
+//   });
+// };
+
+export const deleteAll = async () => {
   const url = `http://${netip}:3000/movies/delete-all`;
   const networkOptions = {
     method: 'DELETE',
   };
-  fetch(url, networkOptions)
-    .then(res => res.json())
-    .catch(err => console.log(`Delete failed due to ${err}`));
+
+  try {
+    const res = await fetch(url, networkOptions);
+    if (!res.ok) {
+      showToast('error', 'Some thing went wrong', 'Try again later');
+      // throw new Error('Network response was not ok');
+    } else {
+      showToast('success', 'The action executed successfully', 'All movies deleted');
+    }
+  } catch (error) {
+    // console.error('Error fetching movies:', error);
+    // throw error; // Propagate the error
+  }
 };

@@ -3,12 +3,32 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { addMovie, deleteAll } from '../../services/movieServices';
 import { SearchItem } from './SearchItem';
 import { MovieModel } from './model';
+import { useDispatch } from 'react-redux';
+import { useDeleteAllMoviesMutation } from '../../services/movieServices1';
 
 export const AddMovie = ({ navigation }) => {
   const [name, setName] = useState('');
   const [score, setScore] = useState('');
   const [url, setUrl] = useState('');
+  const dispatch = useDispatch();
+  const [deleteApi, { isLoading, isError }] = useDeleteAllMoviesMutation();
 
+  // const dispatch = useDispatch();
+  // const [deletePost, { isLoading, isError }] = useDeletePostMutation();
+  //
+  // const handleDeleteClick = () => {
+  //   // Trigger the delete mutation when the button is clicked
+  //   deletePost(postId)
+  //     .then(() => {
+  //       // Optionally handle success here
+  //       console.log('Post deleted successfully.');
+  //     })
+  //     .catch((error) => {
+  //       // Handle error if the delete operation fails
+  //       console.error('Error deleting post:', error);
+  //     });
+  // };
+  //
   const onDeleteMovie = () => {
     deleteAll();
   };
