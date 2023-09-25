@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View } from 'react-native';
 import { Downloads } from '../downloads/Downloads';
 import { MainScreen } from '../movies/MainScreen';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { MoviesNavigator } from "../../navigation/MoviesNavigator";
 
 const BottomTabNav = createBottomTabNavigator();
 
@@ -26,7 +26,7 @@ export const Main = () => {
         }}>
         <BottomTabNav.Screen
           name={'MainScreen'}
-          component={MainScreen}
+          component={MoviesNavigator}
           options={{
             tabBarLabel: 'Home',
           }}

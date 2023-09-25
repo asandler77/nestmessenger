@@ -4,6 +4,7 @@ import { AuthNavigator } from './AuthNavigator';
 import { selectIsAuthenticated } from '../state-mangement/authSelectors';
 import { useAppSelector } from '../state-mangement/storeUtils';
 import { MoviesNavigator } from './MoviesNavigator';
+import { Main } from "../tabs/main/Main";
 
 export const RootStack = createNativeStackNavigator();
 
@@ -19,7 +20,7 @@ export const AppNavigator = () => {
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }}>
       {isAuthenticatedUser ? (
-        <RootStack.Screen name="Messenger" component={MoviesNavigator} />
+        <RootStack.Screen name="Messenger" component={Main} />
       ) : (
         <RootStack.Screen name="AuthNavigator" component={AuthNavigator} />
       )}
