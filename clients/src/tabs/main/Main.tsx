@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { Downloads } from '../downloads/Downloads';
 import { MainScreen } from '../movies/MainScreen';
 import { MoviesNavigator } from "../../navigation/MoviesNavigator";
+import { NewFilms } from "../newFilms/NewFilms";
 
 const BottomTabNav = createBottomTabNavigator();
 
@@ -32,10 +33,17 @@ export const Main = () => {
           }}
         />
         <BottomTabNav.Screen
+          name={'NewFilms'}
+          component={NewFilms}
+          options={{
+            tabBarLabel: 'New Films',
+          }}
+        />
+        <BottomTabNav.Screen
           name={'Downloads'}
           component={Downloads}
           options={{
-            tabBarLabel: 'Home',
+            tabBarLabel: 'Downloads',
           }}
         />
       </BottomTabNav.Navigator>
