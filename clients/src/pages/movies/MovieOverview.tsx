@@ -5,7 +5,7 @@ import { MovieModel } from './model';
 const height = Dimensions.get('window').height * 0.7;
 
 interface Props {
-  movie: MovieModel;
+  movie: MovieModel|null;
 }
 export const MovieOverview = (prop: Props) => {
   const { movie } = prop;

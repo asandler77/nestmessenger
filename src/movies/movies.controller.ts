@@ -31,7 +31,7 @@ export class MoviesController {
   @ApiResponse({ status: "2XX" })
   @Delete("delete-all")
   removeAll() {
-    // throw new NotFoundException("Items not found");
+    // throw new NotFoundException("Items not found...");
     return this.moviesService.removeAll();
   }
 
@@ -39,6 +39,8 @@ export class MoviesController {
   @ApiResponse({ status: "2XX" })
   @Get("movies")
   findAll() {
+    // throw new NotFoundException("Items not found...");
+
     return this.moviesService.findAll();
   }
 

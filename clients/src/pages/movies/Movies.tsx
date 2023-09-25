@@ -1,7 +1,7 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
-import {MovieModel} from './model';
-import {Movie} from './Movie';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { MovieModel } from './model';
+import { Movie } from './Movie';
 
 interface Props {
   movies: MovieModel[];
@@ -9,14 +9,14 @@ interface Props {
 }
 
 export const Movies = (props: Props) => {
-  const {movies, onSelectCB} = props;
+  const { movies, onSelectCB } = props;
 
   return (
     <View style={styles.movie}>
       <FlatList
-
+        keyExtractor={movie => movie.name.toString()}
         data={movies}
-        renderItem={({item}) => <Movie movie={item} onSelectCB={onSelectCB} />}
+        renderItem={({ item }) => <Movie movie={item} onSelectCB={onSelectCB} />}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       />

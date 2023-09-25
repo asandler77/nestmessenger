@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SearchItem } from './SearchItem';
 import { MovieModel } from './model';
-import { useAddMovieMutation, useDeleteAllMoviesMutation } from '../../services/movieServices1';
 
 import { showToast } from '../../components/common/Toasts';
+import { useAddMovieMutation, useDeleteAllMoviesMutation } from '../../services/movieServices';
 
 export const AddMovie = ({ navigation }) => {
   const [name, setName] = useState('');

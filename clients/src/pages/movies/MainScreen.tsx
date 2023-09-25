@@ -4,39 +4,32 @@ import { Movies } from './Movies';
 import { MovieOverview } from './MovieOverview';
 import { MovieModel } from './model';
 import { SearchItem } from './SearchItem';
-import { useGetAllMoviesQuery } from '../../services/movieServices1';
 import { showToast } from '../../components/common/Toasts';
+import { useGetAllMoviesQuery } from '../../services/movieServices';
 
 export const MainScreen = ({ navigation }) => {
   const [searchItem, setSearchItem] = useState('');
-  const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState<MovieModel>(movies[0]);
+  const [selectedMovie, setSelectedMovie] = useState<MovieModel | null>(null);
   const { data, isLoading, isError, refetch } = useGetAllMoviesQuery({});
 
   useEffect(() => {
-    showAllMovies();
+    refetch();
   }, []);
 
-  const showAllMovies = () => {
-    refetch()
-      .then(() => {
-        if (isLoading) {
-          return (
-            <>
-              <Text>Loading...</Text>
-            </>
-          );
-        } else if (isError) {
-          showToast('error', 'Some thing went wrong', 'Try again later');
-        } else {
-          setMovies(data);
-          showToast('success', 'The action executed successfully', 'All movies retrieved');
-        }
-      })
-      .catch((err: any) => {
-        showToast('error', 'Some thing went wrong', `${err}`);
-      });
-  };
+  useEffect(() => {
+    !!data && data.length > 0 && setSelectedMovie(data[0]);
+  }, [data]);
+
+  if (isLoading) {
+    return (
+      <>
+        <Text>Loading...</Text>
+      </>
+    );
+  }
+  if (isError) {
+    showToast('error', 'Some thing went wrong', 'Try again later');
+  }
 
   const onSelectCB = (movie: MovieModel) => {
     setSelectedMovie(movie);
@@ -49,11 +42,12 @@ export const MainScreen = ({ navigation }) => {
   const onAddMovie = () => {
     navigation.navigate('AddMovie');
   };
+  console.log('selectedMovie==', selectedMovie);
 
   return (
     <SafeAreaView style={styles.movies}>
       <MovieOverview movie={selectedMovie} />
-      <Movies movies={movies} onSelectCB={onSelectCB} />
+      <Movies movies={data} onSelectCB={onSelectCB} />
       <SearchItem value={searchItem} onChange={onChangeItem} />
       <TouchableOpacity style={styles.addButton} onPress={onAddMovie}>
         <Text>Add movie</Text>

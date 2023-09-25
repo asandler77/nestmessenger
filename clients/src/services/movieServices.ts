@@ -1,24 +1,31 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { netip } from '../consts';
-import { showToast } from '../components/common/Toasts';
+import { MovieModel } from '../pages/movies/model';
 
-export const getAll = async () => {
-  const url = `http://${netip}:3000/movies`;
-  const networkOptions = {
-    method: 'GET',
-  };
-  try {
-    const res = await fetch(url, networkOptions);
-    if (!res.ok) {
-      showToast('error', 'Some thing went wrong', 'Try again later');
-      // throw new Error('Network response was not ok');
-    } else {
-      showToast('success', 'The action executed successfully', 'All movies loaded successfully');
-    }
+export const deleteApi = createApi({
+  baseQuery: fetchBaseQuery({ baseUrl: `http://${netip}:3000/movies` }),
+  endpoints: builder => ({
+    deleteAllMovies: builder.mutation({
+      query: () => ({
+        url: 'delete-all',
+        method: 'DELETE',
+      }),
+    }),
+    getAllMovies: builder.query({
+      query: () => 'movies',
+    }),
+    addMovie: builder.mutation({
+      query: (movie: MovieModel) => ({
+        url: 'add-movie',
+        method: 'POST',
+        body: {
+          name: movie.name,
+          url: movie.url,
+          score: movie.score,
+        },
+      }),
+    }),
+  }),
+});
 
-    const movies = await res.json();
-    return movies;
-  } catch (error) {
-    console.error('Error fetching movies:', error);
-    throw error; // Propagate the error
-  }
-};
+export const { useDeleteAllMoviesMutation, useAddMovieMutation, useGetAllMoviesQuery } = deleteApi;
